@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-21
+
 ### Added
 
 - Change requests resource:
@@ -22,3 +24,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   then the model's policy.
 - Approving a held creation links the change request to the record it creates.
 - Filament 4 and 5, Laravel 12.4+ and 13, PHP 8.3+.
+
+[Unreleased]: https://github.com/amjadiqbal/filament-change-requests/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/amjadiqbal/filament-change-requests/releases/tag/v1.0.0
