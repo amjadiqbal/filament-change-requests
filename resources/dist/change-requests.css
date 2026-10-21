@@ -1,0 +1,39 @@
+/* filament-change-requests: diff table. Warm colours are used for text and lines only, never as a background fill. */
+.fi-cr-diff td {
+    vertical-align: top;
+}
+
+.fi-cr-diff .fi-cr-diff-old,
+.fi-cr-diff .fi-cr-diff-new {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.fi-cr-diff .fi-cr-diff-changed .fi-cr-diff-old {
+    color: var(--danger-600);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+.fi-cr-diff .fi-cr-diff-changed .fi-cr-diff-new {
+    color: var(--success-700);
+    font-weight: 600;
+}
+
+.fi-cr-diff .fi-cr-diff-same .fi-cr-diff-old,
+.fi-cr-diff .fi-cr-diff-same .fi-cr-diff-new {
+    color: var(--gray-500);
+}
+
+.dark .fi-cr-diff .fi-cr-diff-changed .fi-cr-diff-old {
+    color: var(--danger-400);
+}
+
+.dark .fi-cr-diff .fi-cr-diff-changed .fi-cr-diff-new {
+    color: var(--success-400);
+}
+
+.dark .fi-cr-diff .fi-cr-diff-same .fi-cr-diff-old,
+.dark .fi-cr-diff .fi-cr-diff-same .fi-cr-diff-new {
+    color: var(--gray-400);
+}

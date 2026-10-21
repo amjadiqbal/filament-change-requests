@@ -1,0 +1,13 @@
+<?php
+
+namespace Cjmellor\Approval\Models;
+
+/**
+ * cjmellor/approval adds these as query-builder macros at runtime (ApprovalStateScope), so PHPStan cannot see them.
+ * Column types come from its migrations (see databaseMigrationsPath in phpstan.neon.dist).
+ *
+ * @method int approve(bool $persist = true)
+ * @method int reject()
+ * @method int postpone()
+ */
+class Approval extends \Illuminate\Database\Eloquent\Model {}

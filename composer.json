@@ -1,0 +1,76 @@
+{
+    "name": "amjadiqbal/filament-change-requests",
+    "description": "Hold record edits in Filament as change requests: field-by-field diff, approve, reject and roll back. Built on cjmellor/approval.",
+    "keywords": [
+        "filament",
+        "filament-plugin",
+        "filamentphp",
+        "laravel",
+        "approval",
+        "approval-workflow",
+        "change-request",
+        "maker-checker",
+        "four-eyes",
+        "diff",
+        "eloquent"
+    ],
+    "homepage": "https://github.com/amjadiqbal/filament-change-requests",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Amjad Iqbal",
+            "homepage": "https://amjad.com.pk",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/amjadiqbal/filament-change-requests/issues",
+        "source": "https://github.com/amjadiqbal/filament-change-requests"
+    },
+    "require": {
+        "php": "^8.3",
+        "cjmellor/approval": "^2.1",
+        "filament/filament": "^4.0|^5.0",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0|^4.0",
+        "pestphp/pest-plugin-livewire": "^3.0|^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AmjadIqbal\\FilamentChangeRequests\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AmjadIqbal\\FilamentChangeRequests\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "lint": "vendor/bin/pint --test",
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --memory-limit=1G"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AmjadIqbal\\FilamentChangeRequests\\FilamentChangeRequestsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
