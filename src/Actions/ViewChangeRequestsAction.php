@@ -28,7 +28,7 @@ class ViewChangeRequestsAction extends Action
         $this->label(fn (Model $record): string => __('filament-change-requests::change-requests.actions.view_pending.label', [
             'count' => static::pendingCount($record),
         ]));
-        $this->color('warning');
+        $this->color('info');
         $this->icon(Heroicon::OutlinedClock);
         $this->visible(fn (Model $record): bool => static::pendingCount($record) > 0);
         $this->url(fn (Model $record): string => ChangeRequests::plugin()->getResource()::getUrl('index', [

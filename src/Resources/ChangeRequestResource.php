@@ -72,7 +72,7 @@ class ChangeRequestResource extends Resource
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        return 'warning';
+        return 'info';
     }
 
     public static function getRecordTitle(?Model $record): string
@@ -127,7 +127,8 @@ class ChangeRequestResource extends Resource
                         ->badge()
                         ->state(fn (Approval $record): string => ChangeRequests::status($record))
                         ->formatStateUsing(fn (string $state): string => ChangeRequests::statusLabel($state))
-                        ->color(fn (string $state): string => ChangeRequests::statusColor($state)),
+                        ->color(fn (string $state): string => ChangeRequests::statusColor($state))
+                        ->icon(fn (string $state): Heroicon => ChangeRequests::statusIcon($state)),
                     TextEntry::make('requestor')
                         ->label(__('filament-change-requests::change-requests.columns.requested_by'))
                         ->state(fn (Approval $record): ?string => ChangeRequests::requestorName($record))
@@ -184,7 +185,8 @@ class ChangeRequestResource extends Resource
                     ->badge()
                     ->state(fn (Approval $record): string => ChangeRequests::status($record))
                     ->formatStateUsing(fn (string $state): string => ChangeRequests::statusLabel($state))
-                    ->color(fn (string $state): string => ChangeRequests::statusColor($state)),
+                    ->color(fn (string $state): string => ChangeRequests::statusColor($state))
+                    ->icon(fn (string $state): Heroicon => ChangeRequests::statusIcon($state)),
                 TextColumn::make('created_at')
                     ->label(__('filament-change-requests::change-requests.columns.requested_at'))
                     ->since()

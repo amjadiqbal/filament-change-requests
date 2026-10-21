@@ -26,7 +26,7 @@ class PendingChangesColumn extends TextColumn
         $this->label(__('filament-change-requests::change-requests.columns.pending_changes'));
         $this->counts(['approvals' => fn (Builder $query): Builder => ChangeRequests::wherePending($query)]);
         $this->badge();
-        $this->color(fn (?int $state): string => $state ? 'warning' : 'gray');
+        $this->color(fn (?int $state): string => $state ? 'info' : 'gray');
         $this->formatStateUsing(fn (?int $state): string => $state ? (string) $state : '—');
         $this->alignCenter();
         $this->sortable();

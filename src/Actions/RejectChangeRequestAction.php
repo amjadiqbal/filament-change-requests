@@ -24,6 +24,8 @@ class RejectChangeRequestAction extends Action
         $this->color('danger');
         $this->icon(Heroicon::OutlinedXCircle);
         $this->requiresConfirmation();
+        $this->modalIconColor('gray');
+        $this->modalSubmitAction(fn (Action $action): Action => $action->outlined());
         $this->modalHeading(fn (Approval $record): string => __('filament-change-requests::change-requests.actions.reject.heading', [
             'record' => ChangeRequests::recordTitle($record),
         ]));

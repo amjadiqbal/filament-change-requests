@@ -24,7 +24,7 @@ class ViewChangeRequest extends ViewRecord
     {
         return [
             ApproveChangeRequestAction::make()->after(fn () => $this->refreshRecord()),
-            RejectChangeRequestAction::make()->after(fn () => $this->refreshRecord()),
+            RejectChangeRequestAction::make()->outlined()->after(fn () => $this->refreshRecord()),
             RollBackChangeRequestAction::make()->after(fn () => $this->refreshRecord()),
             Action::make('openRecord')
                 ->label(__('filament-change-requests::change-requests.actions.open_record.label'))

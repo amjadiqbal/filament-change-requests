@@ -6,6 +6,7 @@ namespace AmjadIqbal\FilamentChangeRequests\Actions;
 
 use AmjadIqbal\FilamentChangeRequests\ChangeRequests;
 use Cjmellor\Approval\Models\Approval;
+use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
@@ -26,6 +27,8 @@ class RejectChangeRequestsBulkAction extends BulkAction
         $this->color('danger');
         $this->icon(Heroicon::OutlinedXCircle);
         $this->requiresConfirmation();
+        $this->modalIconColor('gray');
+        $this->modalSubmitAction(fn (Action $action): Action => $action->outlined());
         $this->modalDescription(__('filament-change-requests::change-requests.actions.reject.bulk_description'));
         $this->deselectRecordsAfterCompletion();
 

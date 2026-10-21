@@ -11,6 +11,7 @@ use DateTimeInterface;
 use Filament\Facades\Filament;
 use Filament\Models\Contracts\HasName;
 use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -324,14 +325,26 @@ class ChangeRequests
         return (string) (config("approval.states.{$status}.name") ?? Str::headline($status));
     }
 
+    /**
+     * Badge colour. Badges are drawn as translucent fills in dark mode, where a warm (amber or red) fill turns brown,
+     * so pending is blue and rejected is gray with an icon.
+     */
     public static function statusColor(string $status): string
     {
         return match ($status) {
             'approved' => 'success',
-            'rejected' => 'danger',
-            'pending' => 'warning',
-            'rolled_back' => 'gray',
+            'rejected', 'rolled_back' => 'gray',
             default => 'info',
+        };
+    }
+
+    public static function statusIcon(string $status): Heroicon
+    {
+        return match ($status) {
+            'approved' => Heroicon::OutlinedCheckCircle,
+            'rejected' => Heroicon::OutlinedXCircle,
+            'rolled_back' => Heroicon::OutlinedArrowUturnLeft,
+            default => Heroicon::OutlinedClock,
         };
     }
 
