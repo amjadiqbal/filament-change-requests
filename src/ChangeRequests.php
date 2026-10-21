@@ -310,6 +310,11 @@ class ChangeRequests
             return 'rolled_back';
         }
 
+        // A change request that has not been saved yet has no state; cjmellor's getState() would fail on it.
+        if ($approval->getAttribute('state') === null) {
+            return (string) ($approval->getAttribute('custom_state') ?? ApprovalStatus::Pending->value);
+        }
+
         return $approval->getState();
     }
 
@@ -384,6 +389,12 @@ class ChangeRequests
     {
         $new = static::toArray($approval->new_data);
         $old = static::toArray($approval->original_data);
+
+        // cjmellor/approval swaps new and original data on roll back; show the change as it was requested.
+        if (static::status($approval) === 'rolled_back') {
+            [$new, $old] = [$old, $new];
+        }
+
         $isCreation = static::isCreation($approval);
         $masked = static::plugin()->getMaskedAttributes();
 

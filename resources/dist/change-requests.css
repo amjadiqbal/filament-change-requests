@@ -1,4 +1,17 @@
 /* filament-change-requests: diff table. Warm colours are used for text and lines only, never as a background fill. */
+.fi-cr-diff {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.fi-cr-diff th:first-child {
+    width: 24%;
+}
+
+.fi-cr-diff th:not(:first-child) {
+    width: 38%;
+}
+
 .fi-cr-diff td {
     vertical-align: top;
 }

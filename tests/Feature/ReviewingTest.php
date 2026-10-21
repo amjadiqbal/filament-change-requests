@@ -137,6 +137,10 @@ it('rolls back an approved change', function (): void {
 
     expect($this->product->fresh())->price->toBe(120)->stock->toBe(40)
         ->and(ChangeRequests::status($this->approval->fresh()))->toBe('rolled_back');
+
+    $price = collect(ChangeRequests::diff($this->approval->fresh()))->firstWhere('attribute', 'price');
+
+    expect($price)->toMatchArray(['old' => '120', 'new' => '95']);
 });
 
 it('approves and rejects in bulk, skipping what it cannot review', function (): void {
