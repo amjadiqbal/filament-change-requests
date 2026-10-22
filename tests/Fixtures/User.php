@@ -8,6 +8,11 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ */
 class User extends Authenticatable implements FilamentUser
 {
     protected $table = 'users';
