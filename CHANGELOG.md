@@ -6,9 +6,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
-### Fixed
+## [1.0.1] - 2026-10-22
 
-- An edit whose record has since been deleted can no longer be reviewed. Before, it was checked against the model's `create` policy.
+### Security
+
+- **Authorization fix.** A pending edit whose record had since been deleted was authorized against the model policy's
+  `create` ability instead of `update`. So a user who could create records, but not update that record, was shown
+  Approve and Reject for that change request and could reject it. Approving it failed anyway, because the record no
+  longer exists, and roll back is never offered without the record. An edit whose record no longer exists is now
+  refused. Held creations are still checked against `create`. Please update.
 
 ### Changed
 
@@ -34,5 +40,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Approving a held creation links the change request to the record it creates.
 - Filament 4 and 5, Laravel 12.4+ and 13, PHP 8.3+.
 
-[Unreleased]: https://github.com/amjadiqbal/filament-change-requests/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/amjadiqbal/filament-change-requests/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/amjadiqbal/filament-change-requests/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/amjadiqbal/filament-change-requests/releases/tag/v1.0.0
