@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="art/banner-dark.png">
-    <img alt="Change Requests — review record edits before they are saved" src="art/banner-light.png" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amjadiqbal/filament-change-requests/main/art/banner-dark.png">
+    <img alt="Change Requests — review record edits before they are saved" src="https://raw.githubusercontent.com/amjadiqbal/filament-change-requests/main/art/banner-light.png" width="100%">
   </picture>
 </p>
 
@@ -15,7 +15,7 @@ approves, rejects or rolls back the change. It works with Filament 4 and 5 and i
 [![PHP Version](https://img.shields.io/packagist/php-v/amjadiqbal/filament-change-requests?style=flat-square)](https://packagist.org/packages/amjadiqbal/filament-change-requests)
 [![License](https://img.shields.io/packagist/l/amjadiqbal/filament-change-requests.svg?style=flat-square)](LICENSE.md)
 
-![A change request with its field-by-field diff](art/screenshots/view-diff.png)
+![A change request with its field-by-field diff](https://raw.githubusercontent.com/amjadiqbal/filament-change-requests/main/art/screenshots/view-diff.png)
 
 ## What it does
 
@@ -141,7 +141,7 @@ use AmjadIqbal\FilamentChangeRequests\Widgets\PendingChangeRequestsWidget;
 $panel->widgets([PendingChangeRequestsWidget::class]);
 ```
 
-![The change requests list](art/screenshots/list.png)
+![The change requests list](https://raw.githubusercontent.com/amjadiqbal/filament-change-requests/main/art/screenshots/list.png)
 
 ## Who can approve
 
