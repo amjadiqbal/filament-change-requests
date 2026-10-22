@@ -11,6 +11,8 @@ Hold edits to your Filament records as change requests. An approver sees the old
 approves, rejects or rolls back the change. It works with Filament 4 and 5 and is built on
 [cjmellor/approval](https://github.com/cjmellor/approval).
 
+**Docs and demo:** [amjad.com.pk/filament/plugins/filament-change-requests](https://amjad.com.pk/filament/plugins/filament-change-requests)
+
 [![Latest Version](https://img.shields.io/packagist/v/amjadiqbal/filament-change-requests.svg?style=flat-square)](https://packagist.org/packages/amjadiqbal/filament-change-requests)
 [![PHP Version](https://img.shields.io/packagist/php-v/amjadiqbal/filament-change-requests?style=flat-square)](https://packagist.org/packages/amjadiqbal/filament-change-requests)
 [![License](https://img.shields.io/packagist/l/amjadiqbal/filament-change-requests.svg?style=flat-square)](LICENSE.md)
@@ -19,17 +21,22 @@ approves, rejects or rolls back the change. It works with Filament 4 and 5 and i
 
 ## What it does
 
-- **Edits wait for approval.** When someone saves a record of a model that needs approval, nothing changes yet.
+- **Edits wait for approval.** When someone saves a record of a model that needs approval, its own attributes don't
+  change yet.
   - They see "Changes submitted for approval" instead of "Saved".
   - The form goes back to the saved values.
-  - A "Pending changes" button links to the request.
+  - If you add `ViewChangeRequestsAction` to the page header, a "Pending changes (n)" button opens the change requests
+    list filtered to that record.
 - **New records wait too.** A held create says "Submitted for approval" and goes back to the list. No broken
   redirect to a record that doesn't exist yet.
-- **A field-by-field diff.** Each changed field shows its value before and after. Passwords and tokens are masked.
+- **A field-by-field diff.** Each changed field shows its value before and after.
+  - By default `password`, `remember_token`, `api_token`, `two_factor_secret` and `two_factor_recovery_codes` are
+    masked.
+  - Any other secret column is shown unless you add it with `maskedAttributes()`.
 - **Approve, reject, roll back.**
   - You can approve or reject from the list, one at a time or in bulk, from the request page, or from a dashboard widget.
-  - Rolling back an approved change restores the previous values.
-- **Four-eyes by default.** Nobody can approve or reject their own change request.
+  - On the request page, an approved change can be rolled back once, which writes its "Before" values back.
+- **Four-eyes by default.** Nobody can approve, reject or roll back a change request they made themselves.
 - **On your existing tables:** a pending-changes count column and a "Has pending changes" filter.
 - Light and dark mode. English strings, all translatable.
 
@@ -147,8 +154,8 @@ $panel->widgets([PendingChangeRequestsWidget::class]);
 
 The plugin checks these in order:
 
-1. **Self-review is blocked.** Nobody can approve or reject their own request. Turn this off with
-   `->preventSelfReview(false)`.
+1. **Self-review is blocked.** Nobody can approve, reject or roll back their own request. This only applies to requests
+   with a recorded requester, that is, ones made by a signed-in user. Turn it off with `->preventSelfReview(false)`.
 2. **Your callback**, if you set one:
    ```php
    ChangeRequestsPlugin::make()
@@ -158,9 +165,17 @@ The plugin checks these in order:
    ```php
    Gate::define('reviewChangeRequest', fn (User $user, Approval $approval): bool => $user->hasRole('editor-in-chief'));
    ```
-4. **The model's policy.** A user who may `update` the record can review edits to it, and a user who may `create`
-   one can review held creations.
-5. **Anyone in the panel**, if the model has no policy.
+4. **The model's policy.**
+   - A user who may `update` the record can review edits to it.
+   - A user who may `create` one can review held creations.
+   - An edit whose record has since been deleted can't be reviewed.
+5. **Anyone signed in to the panel** (except the requester), if the model has no policy.
+
+A callback or the gate decides on its own: once either is set, the model's policy isn't checked.
+
+These rules cover approving, rejecting and rolling back. They don't limit who can open the Change requests list or read
+the diffs; for that, register a policy for `Cjmellor\Approval\Models\Approval` (its `viewAny` and `view`) or use
+your own resource with `->resource(MyChangeRequestResource::class)`.
 
 ## Configuration
 
@@ -186,8 +201,20 @@ The actions are plain Filament actions, so you can use them on your own pages or
 - Approving writes the new values to the record and records who approved it.
 - For a held creation, the plugin links the change request to the record that approving it creates. cjmellor/approval
   alone leaves that link empty.
-- Rolling back writes the original values back. The request keeps showing the change as it was asked for.
+- Rolling back writes the stored "Before" values back. That also replaces any later edit to the same fields. Roll back
+  is only offered for an approved request whose record still exists, and only once. The request keeps showing the
+  change as it was asked for.
 - Custom states from `config('approval.states')` appear in the status filter and badge.
+
+## Limits
+
+- **Only the model's own attributes are held.** Filament saves relationship fields (for example a `Select` or
+  `Repeater` with `->relationship()`) itself, so on an edit they save straight away.
+- **On a held create**, relationship fields aren't saved at all, because the record doesn't exist until it's approved.
+- **Deletes aren't held.** cjmellor/approval only holds creates and updates.
+- **Diff labels** are the attribute names in headline case (`is_active` becomes "Is Active"), not your form labels. Set
+  your own with `attributeLabels()`.
+- **Values:** arrays and JSON show pretty-printed; booleans show as Yes or No.
 
 ## Testing
 

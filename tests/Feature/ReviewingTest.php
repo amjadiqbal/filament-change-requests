@@ -8,6 +8,7 @@ use AmjadIqbal\FilamentChangeRequests\Resources\ChangeRequestResource;
 use AmjadIqbal\FilamentChangeRequests\Resources\ChangeRequestResource\Pages\ListChangeRequests;
 use AmjadIqbal\FilamentChangeRequests\Resources\ChangeRequestResource\Pages\ViewChangeRequest;
 use AmjadIqbal\FilamentChangeRequests\Tests\Fixtures\Product;
+use AmjadIqbal\FilamentChangeRequests\Tests\Fixtures\ProductPolicy;
 use AmjadIqbal\FilamentChangeRequests\Widgets\PendingChangeRequestsWidget;
 use Cjmellor\Approval\Enums\ApprovalStatus;
 use Cjmellor\Approval\Models\Approval;
@@ -112,6 +113,17 @@ it('uses the reviewChangeRequest gate when the app defines it', function (): voi
     Gate::define(ChangeRequests::ABILITY, fn ($user, Approval $approval): bool => false);
 
     expect(ChangeRequests::canReview($this->approval, $this->reviewer))->toBeFalse();
+});
+
+it('checks the model policy, and refuses an edit whose record was deleted', function (): void {
+    Gate::policy(Product::class, ProductPolicy::class);
+
+    expect(ChangeRequests::canReview($this->approval, $this->reviewer))->toBeTrue()
+        ->and(ChangeRequests::canReview($this->approval, $this->makeUser('Intern')))->toBeFalse();
+
+    $this->product->delete();
+
+    expect(ChangeRequests::canReview($this->approval->fresh(), $this->reviewer))->toBeFalse();
 });
 
 it('shows the diff and approves from the view page', function (): void {

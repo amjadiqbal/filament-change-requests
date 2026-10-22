@@ -132,11 +132,14 @@ class ChangeRequests
             return true;
         }
 
+        if (static::isCreation($approval)) {
+            return Gate::forUser($user)->allows('create', $class);
+        }
+
+        // An edit whose record has since been deleted has nothing left to apply it to.
         $record = $approval->approvalable;
 
-        return $record
-            ? Gate::forUser($user)->allows('update', $record)
-            : Gate::forUser($user)->allows('create', $class);
+        return $record !== null && Gate::forUser($user)->allows('update', $record);
     }
 
     public static function isRequestedBy(Approval $approval, Authenticatable $user): bool

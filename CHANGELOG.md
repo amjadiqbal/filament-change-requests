@@ -6,6 +6,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Fixed
+
+- An edit whose record has since been deleted can no longer be reviewed. Before, it was checked against the model's `create` policy.
+
+### Changed
+
+- README: exact masking defaults, what self-review covers, who can view requests, roll-back rules, and a Limits section.
+- Homepage and docs point to https://amjad.com.pk/filament/plugins/filament-change-requests.
+
 ## [1.0.0] - 2026-10-21
 
 ### Added

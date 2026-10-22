@@ -14,7 +14,7 @@
         "diff",
         "eloquent"
     ],
-    "homepage": "https://github.com/amjadiqbal/filament-change-requests",
+    "homepage": "https://amjad.com.pk/filament/plugins/filament-change-requests",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -26,7 +26,8 @@
     ],
     "support": {
         "issues": "https://github.com/amjadiqbal/filament-change-requests/issues",
-        "source": "https://github.com/amjadiqbal/filament-change-requests"
+        "source": "https://github.com/amjadiqbal/filament-change-requests",
+        "docs": "https://amjad.com.pk/filament/plugins/filament-change-requests"
     },
     "require": {
         "php": "^8.3",
